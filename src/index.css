@@ -1,0 +1,43 @@
+.contacts {
+    border-width: 1px;
+    border-style: solid;
+    border-color: grey;
+    display: flex;
+    margin: 20px;
+}
+
+.create {
+    display: flex;
+    justify-self: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    margin-top: 1rem;
+    font-family: 'Times New Roman', Times, serif;
+    
+}
+
+.datos {
+    display: grid;
+    align-content: center;
+    width: 60%;
+    font-family: Arial, sans-serif; 
+    font-size: 16px; 
+    color: black; 
+    text-align: justify;
+}
+
+.card-img {
+    width: 25%;
+    
+}
+
+.botones{
+    text-align: right;
+    grid-column: 1 / span 2; 
+  display: flex;
+  justify-content: flex-end;
+}
