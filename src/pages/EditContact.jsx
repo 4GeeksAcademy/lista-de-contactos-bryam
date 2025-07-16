@@ -8,14 +8,15 @@ export const EditContact = () => {
     const params = useParams()
     const { store, dispatch } = useGlobalReducer()
     const navigate = useNavigate()
-    const [formData, setFormData] = useState(store.agenda.find(el=> el.id == params.id))
+    const [formData, setFormData] = useState(store.agenda.find(el => el.id == params.id))
 
     const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     const handleReset = () => {
-        setFormData(store.agenda.find(el=> el.id == params.id))
+        const original = store.agenda.find(el => el.id == params.id);
+        if (original) setFormData(original);
     }
 
     const handleSubmit = async e => {
@@ -51,7 +52,7 @@ export const EditContact = () => {
                     <input type="text" className="form-control mb-2" placeholder="address" name="address" value={formData.address} onChange={handleChange} />
                 </div>
                 <input type="submit" className="btn btn-primary" />
-                <input type="reset" onClick={handleReset} className="btn btn-danger" />
+                <input type="button" onClick={handleReset} className="btn btn-danger" value="Reset" />
             </form>
         </div>
     )

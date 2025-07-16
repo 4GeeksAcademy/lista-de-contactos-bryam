@@ -7,31 +7,25 @@ export const Home = () => {
 
 	const { store, dispatch } = useGlobalReducer()
 
-	const fetchGetAllAgendas = async () => {
-		try {
-			const data = await ContactServices.getAllAgendas();
-			console.log(data)
-			dispatch({ type: 'getAllAgendas', payload: data.contacts })
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	const fetchGetAgendas = async (username) => {
-		try {
-			const data = await ContactServices.getAgenda(username);
-			console.log(data)
-			dispatch({ type: 'getUserAgenda', payload: data.contacts })
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	useEffect(() => {
+		const initAgenda = async () => {
+			try {
+				const data = await ContactServices.getAgenda("bryam");
+				dispatch({ type: "getUserAgenda", payload: data.contacts });
+			} catch (error) {
+				console.log("Agenda no encontrada. Creando usuario...");
+				try {
+					await ContactServices.createAgenda("bryam");
+					const newData = await ContactServices.getAgenda("bryam");
+					dispatch({ type: "getUserAgenda", payload: newData.contacts });
+				} catch (err) {
+					console.error("No se pudo crear la agenda:", err);
+				}
+			}
+		};
 
-		fetchGetAllAgendas()
-		fetchGetAgendas('bryam')
-	}, [])
+		initAgenda();
+	}, []);
 
 	return (
 		<div className="card_user">

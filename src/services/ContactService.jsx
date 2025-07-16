@@ -1,3 +1,4 @@
+
 const ContactService = {}
 
 //GET ALL AGENDAS
@@ -15,14 +16,13 @@ ContactService.getAllAgendas = async () => {
 ContactService.getAgenda = async (slug) => {
     try {
         const resp = await fetch('https://playground.4geeks.com/contact/agendas/' + slug)
-        if (!resp.ok) {
-            await ContactService.createAgenda(slug);
-            return { message: "Creada nueva agenda" };
-        }
+        if (!resp.ok) throw new Error("Agenda not found")
+
         const data = await resp.json()
         return data
     } catch (error) {
         console.log(error)
+        throw error
     }
 }
 
@@ -34,14 +34,17 @@ ContactService.createAgenda = async (slug) => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        const updatedAgenda = await ContactService.getAgenda('bryam');
-        return updatedAgenda
+        });
+
+        if (!resp.ok) throw new Error("Error al crear agenda");
+
+        const data = await resp.json();
+        return data;
     } catch (error) {
         console.log(error)
+        throw error;
     }
 }
-
 
 // CREATE CONTACT
 ContactService.createContact = async (Contact) => {
